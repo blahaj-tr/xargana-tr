@@ -1,1 +1,0 @@
-curl https://openexchangerates.org/api/currencies.json

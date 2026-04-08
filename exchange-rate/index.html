@@ -381,6 +381,7 @@
             
             // Fetch currency names from codes.json
             try {
+                // https://openexchangerates.org/api/currencies.json
                 const namesResponse = await fetch('./codes.json');
                 if (namesResponse.ok) {
                     currencyNames = await namesResponse.json();

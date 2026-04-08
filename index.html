@@ -2,115 +2,116 @@
 <!--
   Credits to:
   
-  https://github.com/adryd325/ for oneko.js
-  https://blahaj.land/ for blahaj.gif
+  https://github.com/adryd325/ - ./assets/oneko.js
+  https://blahaj.land/ - ./assets/blahaj.gif
+  https://www.svgrepo.com/svg/510970/external-link - ./assets/external-link.svg
 
   made by Xargana
 -->
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>xargana.tr</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="icon" type="image/png" href="./assets/favicon.png">
-    <meta name="title" content="xargana.tr">
-    <meta name="description" content="xargana.tr - Home of web services and projects by xargana">
-    <meta name="theme-color" content="#4b4c51">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-</head>
-<body>
-    <header>
-        <div class="logo">
-            <a href="./index.html">xargana.tr</a>
-        </div>
-        <nav>
-             <ul>
-                <li><a href="./">Home</a></li>
-                <li><a href="https://status.xargana.tr/">Status</a></li>
-                <li><a href="./contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <img src="./assets/blahaj.gif" alt="blahaj" />
-            <h1>xargana.tr</h1>
-            <p class="js-splash">may javascript haunt your router</p>
-        </section>
-
-        <section class="social-links container">
-            <h2>Find me on</h2>
-            <ul class="social-list">
-                <li><a href="https://github.com/xargana" target="_blank">GitHub</a></li>
-                <li><a href="https://mastodon.xargana.tr/@xargana" target="_blank">Mastodon</a></li>
-                <li><a href="https://git.xargana.tr/Xargana" target="_blank">Forgejo</a></li>
-                <li><a href="https://discord.com/users/1168626335942455326">Discord</a></li>
-            </ul>
-        </section>
-        <section class="features container">
-            <h2>Things</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>Aurora</h3>
-                    <p>A versatile Discord utility bot offering network tools, information retrieval, and entertainment features.</p>
-                    <a href="https://aurora.xargana.tr">Learn more</a>
+    <head>
+        <title>xargana.tr</title>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="icon" type="image/png" href="./assets/favicon.png">
+        <meta name="title" content="xargana.tr">
+        <meta name="description" content="xargana.tr - Home of web services and projects by xargana">
+        <meta name="theme-color" content="#4b4c51">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <header>
+            <div class="logo">
+                <a href="./index.html">xargana.tr</a>
+            </div>
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <nav id="nav-menu">
+                <ul>
+                    <li><a href="./">Home</a></li>
+                    <li><a href="https://status.xargana.tr/">Status</a></li>
+                    <li><a href="./contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            <section class="hero">
+                <img src="./assets/blahaj.gif" alt="blahaj" />
+                <h1>xargana.tr</h1>
+                <p class="js-splash">may javascript haunt your router :P</p>
+            </section>
+            <div class="containers-wrapper">
+                <div class="wireframe-container wireframe-left">
+                    <p class="link-title">Socials</p>
+                    <ul class="link-list">
+                        <li><a href="https://discord.com/users/1168626335942455326" class="link-button">Discord <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://matrix.to/#/@me:xargana.tr" class="link-button">Matrix <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://mastodon.xargana.tr/@xargana" class="link-button">Mastodon <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://github.com/Xargana" class="link-button">GitHub <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://steamcommunity.com/id/Xargana/" class="link-button">Steam <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                    </ul>
                 </div>
-                <div class="feature-card">
-                    <h3>exchange-rate</h3>
-                    <p>Convert currencies instantly.</p>
-                    <a href="https://xargana.tr/exchange-rate">Try it out</a>
-                </div>
-                <div class="feature-card">
-                    <h3>Server Status</h3>
-                    <p>Check the current status of all xargana.tr services and servers.</p>
-                    <a href="https://status.xargana.tr/">View Status</a>
-                </div>
-                <div class="feature-card">
-                    <h3>Forgejo instance</h3>
-                    <p>Check out my forgejo instance.</p>
-                    <a href="https://git.xargana.tr/">Go to Forgejo</a>
-                </div>
-                <div class="feature-card">
-                    <h3>Mastodon instance</h3>
-                    <p>Check out my mastodon instance</p></p>
-                    <a href="https://mastodon.xargana.tr/">Go to Mastodon</a>
+                <div class="wireframe-container wireframe-right">
+                    <p class="link-title">Services</p>
+                    <ul class="link-list">
+                        <li><a href="https://aurora.xargana.tr" class="link-button">Aurora <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://xargana.tr/exchange-rate" class="link-button">Exchange Rate <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://mastodon.xargana.tr/" class="link-button">Mastodon <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://git.xargana.tr/" class="link-button">Forgejo <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                        <li><a href="https://matrix.xargana.tr/" class="link-button">Matrix <img src="./assets/external-link.svg" alt="Visit" class="link-icon"></a></li>
+                    </ul>
                 </div>
             </div>
-        </section>
-    </main>
-        <a href="https://www.abuseipdb.com/user/214408" title="AbuseIPDB is an IP address blacklist for webmasters and sysadmins to report IP addresses engaging in abusive behavior on their networks">
-	        <img src="https://www.abuseipdb.com/contributor/214408.svg" alt="AbuseIPDB Contributor Badge" style="width: 238px;background: #2f507c linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.185) 50%, rgba(255, 255, 255, 0.082) 51%, rgba(0,0,0,0));padding: 5px;">
-        </a>
-    <footer style="display: flex; justify-content: center; align-items: center; gap: 20px; position: relative;">
-        <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-            <!-- list aligns to left -->
-            <p>2025 xargana.tr - No rights reserved</p>
-            <p>Powered by <a href="https://nginx.org/" target="_blank"><img src="./assets/nginx-small.png" alt="Nginx" style="max-width: 80px; transform: translateY(4px)"></a></p>
-        </div>
-    </footer>
-</body>
-<script>
-    // scroll through random text on js-splash
-    const text = [
-        "PissBot 9000 Industries LTD",
-        "Sponsored by Unemployment INC",
-        "Never coding ever again",
-        "Alexa, remove California",
-        "I am NOT a robot",
-        "Maybe I am a robot who knows",
-        "@grok is this true",
-        "I know, this is like 30% ai slop"
-    ].sort(() => Math.random() - 0.5);
-    const splash = document.querySelector('.js-splash');
-    let index = 0;
-    splash.textContent = text[index];
-    let interval = setInterval(() => {
-        index = (index + 1) % text.length;
+        </main>
+        <footer>
+            <a href="https://www.abuseipdb.com/user/214408" title="AbuseIPDB is an IP address blacklist for webmasters and sysadmins to report IP addresses engaging in abusive behavior on their networks" class="footer-badge">
+                <img src="https://www.abuseipdb.com/contributor/214408.svg" alt="AbuseIPDB Contributor Badge">
+            </a>
+            <div class="footer-content">
+                <p>2026 xargana.tr - No rights reserved</p>
+                <p>Powered by <a href="https://nginx.org/" target="_blank"><img src="./assets/nginx-small.png" alt="Nginx" style="max-width: 80px; transform: translateY(4px)"></a></p> <!-- TODO: modify the image to have a transparent background -->
+            </div>
+        </footer>
+    </body>
+    <script src="./assets/oneko.js" data-cat="./assets/oneko.gif"></script>
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+        
+        // Close menu when a link is clicked
+        const navLinks = navMenu.querySelectorAll('a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // not on a script file to improve FCP (and to not display the "javascript disabled" text on slow connections)
+        const text = [
+            "PissBot 9000 Industries LTD",
+            "Sponsored by Unemployment INC",
+            "Never coding ever again",
+            "Alexa, remove California",
+            "@grok is this true",
+        ].sort(() => Math.random() - 0.5);
+        const splash = document.querySelector('.js-splash');
+        let index = 0;
         splash.textContent = text[index];
-    }, 3000);
-</script>
-<script src="./assets/oneko.js" data-cat="./assets/oneko.gif"></script>
+        let interval = setInterval(() => {
+            index = (index + 1) % text.length;
+            splash.textContent = text[index];
+        }, 3000);
+    </script>
 </html>
