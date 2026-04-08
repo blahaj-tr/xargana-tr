@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Status</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Xargana Server Status">
+    <meta name="description" content="Real-time monitoring of Xargana services and servers">
+    <meta name="theme-color" content="#3498db">
+    
+    <!-- Open Graph / Discord Embed -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://xargana.tr:2589/status">
+    <meta property="og:title" content="Xargana Server Status">
+    <meta property="og:description" content="Real-time monitoring of Xargana servers and services">
+    <meta property="og:image" content="https://xargana.tr:2589/status/server-status.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:alt" content="Xargana server status monitoring dashboard">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://xargana.tr:2589/status">
+    <meta property="twitter:title" content="Xargana Server Status">
+    <meta property="twitter:description" content="Real-time monitoring of Xargana servers and services">
+    <meta property="twitter:image" content="https://xargana.tr:2589/status/server-status.jpg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0e1116;
+            --card-bg: #1a1d23;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent-color: #3498db;
+            --success-color: #2ecc71;
+            --warning-color: #f39c12;
+            --danger-color: #e74c3c;
+            --border-color: #2c3038;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--accent-color), #9b59b6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .status-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .status-header {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+            padding: 1.2rem 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .status-body {
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .status-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1.5fr 1.5fr;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            align-items: center;
+            transition: background-color 0.2s ease;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-row:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .server-name {
+            font-weight: 500;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .online .status-dot {
+            background-color: var(--success-color);
+            box-shadow: 0 0 8px var(--success-color);
+        }
+
+        .offline .status-dot {
+            background-color: var(--danger-color);
+            box-shadow: 0 0 8px var(--danger-color);
+        }
+
+        .online {
+            color: var(--success-color);
+        }
+
+        .offline {
+            color: var(--danger-color);
+        }
+
+        .response-time {
+            font-family: 'Inter', monospace;
+            font-weight: 500;
+        }
+
+        .timestamp {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .error-message {
+            text-align: center;
+            padding: 2rem;
+            color: var(--danger-color);
+        }
+
+        .refresh-info {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .tab.active {
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .tab:hover:not(.active) {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .memory-usage {
+            font-family: 'Inter', monospace;
+            font-size: 0.9rem;
+        }
+
+        .uptime {
+            font-size: 0.9rem;
+        }
+
+        .local-server {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .status-header, .status-row {
+                grid-template-columns: 1.5fr 1fr 1.5fr;
+            }
+
+            .status-header div:nth-child(3), .status-row div:nth-child(3) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .status-header, .status-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .status-header div:nth-child(4), .status-row div:nth-child(4) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Server Status</h1>
+        <p class="subtitle">Real-time monitoring of our services</p>
+    </header>
+
+    <div class="tabs">
+        <div class="tab active" data-tab="servers">Servers</div>
+        <div class="tab" data-tab="services">PM2 Services</div>
+    </div>
+
+    <div id="servers-tab" class="tab-content active">
+        <!-- Local Server Section -->
+        <div class="status-container">
+            <div class="section-title">Local Server</div>
+            <div class="status-header">
+                <div>Name</div>
+                <div>Status</div>
+                <div>Last Checked</div>
+                <div>Response Time</div>
+            </div>
+            <div class="status-body" id="local-server-table">
+                <div class="loading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            .spinner {
+                                transform-origin: center;
+                                animation: spin 1s linear infinite;
+                            }
+                            @keyframes spin {
+                                100% { transform: rotate(360deg); }
+                            }
+                        </style>
+                        <circle class="spinner" cx="12" cy="12" r="10" fill="none" stroke="#3498db" stroke-width="2" stroke-dasharray="30 50" />
+                    </svg>
+                    <p>Loading local server status...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Remote Servers Section -->
+        <div class="status-container">
+            <div class="section-title">Remote Servers</div>
+            <div class="status-header">
+                <div>Name</div>
+                <div>Status</div>
+                <div>Last Checked</div>
+                <div>Response Time</div>
+            </div>
+            <div class="status-body" id="remote-servers-table">
+                <div class="loading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            .spinner {
+                                transform-origin: center;
+                                animation: spin 1s linear infinite;
+                            }
+                            @keyframes spin {
+                                100% { transform: rotate(360deg); }
+                            }
+                        </style>
+                        <circle class="spinner" cx="12" cy="12" r="10" fill="none" stroke="#3498db" stroke-width="2" stroke-dasharray="30 50" />
+                    </svg>
+                    <p>Loading remote servers status...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="services-tab" class="tab-content">
+        <div class="status-container">
+            <div class="section-title">PM2 Services</div>
+            <div class="status-header">
+                <div>Name</div>
+                <div>Status</div>
+                <div>Uptime</div>
+                <div>Memory</div>
+            </div>
+            <div class="status-body" id="services-table">
+                <div class="loading">
+                    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            .spinner {
+                                transform-origin: center;
+                                animation: spin 1s linear infinite;
+                            }
+                            @keyframes spin {
+                                100% { transform: rotate(360deg); }
+                            }
+                        </style>
+                        <circle class="spinner" cx="12" cy="12" r="10" fill="none" stroke="#3498db" stroke-width="2" stroke-dasharray="30 50" />
+                    </svg>
+                    <p>Loading PM2 services status...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="refresh-info">Status updates automatically every 5 seconds</p>
+
+    <script>
+        const API_URL = "https://xargana.tr:2589/status";
+
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and tab contents
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+            });
+        });
+
+        function formatUptime(milliseconds) {
+            if (!milliseconds) return 'N/A';
+            
+            // Convert milliseconds to seconds
+            const seconds = Math.floor(milliseconds / 1000);
+            
+            // Calculate days, hours, minutes
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            
+            // Format the output
+            let result = '';
+            if (days > 0) result += `${days}d `;
+            if (hours > 0 || days > 0) result += `${hours}h `;
+            result += `${minutes}m`;
+            
+            return result;
+        }
+
+
+        function formatMemory(bytes) {
+            if (!bytes) return 'N/A';
+            
+            const mb = bytes / (1024 * 1024);
+            return `${mb.toFixed(1)} MB`;
+        }
+
+        function createServerRow(server, info) {
+            const row = document.createElement("div");
+            row.className = "status-row";
+            
+            // Add local-server class if this is the local server
+            if (server === "xargana.tr") {
+                row.classList.add("local-server");
+            }
+            
+            const responseTime = info.responseTime;
+            let responseTimeFormatted;
+            if (responseTime > 4999 || responseTime === "unknown" || responseTime === null) {
+                responseTimeFormatted = "Timed out";
+            } else {
+                responseTimeFormatted = responseTime + " ms";
+            }
+            
+            const statusClass = info.online ? 'online' : 'offline';
+            const statusText = info.online ? 'Online' : 'Offline';
+            
+            const lastCheckedDate = new Date(info.lastChecked);
+            const formattedDate = lastCheckedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            
+            row.innerHTML = `
+                <div class="server-name">${server}</div>
+                <div class="status-indicator ${statusClass}">
+                    <span class="status-dot"></span>
+                    <span>${statusText}</span>
+                </div>
+                <div class="timestamp">${formattedDate}</div>
+                <div class="response-time">${responseTimeFormatted}</div>
+            `;
+            
+            return row;
+        }
+
+        async function checkStatus() {
+            try {
+                // Check local server health endpoint first
+                try {
+                    const healthResponse = await fetch('https://xargana.tr:2589/status/health');
+                    if (healthResponse.status !== 200) {
+                        document.getElementById("local-server-table").innerHTML = `
+                            <div class="error-message">
+                                <p>Status API is down, try again later</p>
+                            </div>
+                        `;
+                        document.getElementById("remote-servers-table").innerHTML = `
+                            <div class="error-message">
+                                <p>Status API is down, try again later</p>
+                            </div>
+                        `;
+                        document.getElementById("services-table").innerHTML = `
+                            <div class="error-message">
+                                <p>Status API is down, try again later</p>
+                            </div>
+                        `;
+                        return;
+                    }
+                } catch (error) {
+                    document.getElementById("local-server-table").innerHTML = `
+                        <div class="error-message">
+                            <p>Status API is down, try again later</p>
+                        </div>
+                    `;
+                    document.getElementById("remote-servers-table").innerHTML = `
+                        <div class="error-message">
+                            <p>Status API is down, try again later</p>
+                        </div>
+                    `;
+                    document.getElementById("services-table").innerHTML = `
+                        <div class="error-message">
+                            <p>Status API is down, try again later</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const response = await fetch(API_URL, { mode: "cors" });
+                const data = await response.json();
+                
+                // Handle server status
+                const serversData = data.servers || data; // Support both new and old API format
+                
+                // Clear previous content
+                const localServerTable = document.getElementById("local-server-table");
+                const remoteServersTable = document.getElementById("remote-servers-table");
+                localServerTable.innerHTML = "";
+                remoteServersTable.innerHTML = "";
+                
+                // Process each server
+                for (const [server, info] of Object.entries(serversData)) {
+                    const row = createServerRow(server, info);
+                    
+                    // Add to appropriate table
+                    if (server === "xargana.tr") {
+                        localServerTable.appendChild(row);
+                    } else {
+                        remoteServersTable.appendChild(row);
+                    }
+                }
+                
+                // Show message if no local server found
+                if (localServerTable.children.length === 0) {
+                    localServerTable.innerHTML = `
+                        <div class="error-message">
+                            <p>Local server status not available</p>
+                        </div>
+                    `;
+                }
+                
+                // Show message if no remote servers found
+                if (remoteServersTable.children.length === 0) {
+                    remoteServersTable.innerHTML = `
+                        <div class="error-message">
+                            <p>No remote servers configured</p>
+                        </div>
+                    `;
+                }
+                
+                // Handle PM2 services status if available
+                if (data.pm2Services) {
+                    const servicesBody = document.getElementById("services-table");
+                    servicesBody.innerHTML = "";
+                    
+                    if (Object.keys(data.pm2Services).length === 0) {
+                        servicesBody.innerHTML = `
+                            <div class="error-message">
+                                <p>No PM2 services found</p>
+                            </div>
+                        `;
+                    } else {
+                        for (const [service, info] of Object.entries(data.pm2Services)) {
+                            const row = document.createElement("div");
+                            row.className = "status-row";
+                            
+                            const statusClass = info.status === 'online' ? 'online' : 'offline';
+                            const statusText = info.status === 'online' ? 'Online' : 'Offline';
+                            
+                            const uptimeFormatted = formatUptime(info.uptime);
+                            const memoryFormatted = formatMemory(info.memory);
+                            
+                            row.innerHTML = `
+                                <div class="server-name">${info.name || service}</div>
+                                <div class="status-indicator ${statusClass}">
+                                    <span class="status-dot"></span>
+                                    <span>${statusText}</span>
+                                </div>
+                                <div class="uptime">${uptimeFormatted}</div>
+                                <div class="memory-usage">${memoryFormatted}</div>
+                            `;
+                            
+                            servicesBody.appendChild(row);
+                        }
+                    }
+                } else {
+                    document.getElementById("services-table").innerHTML = `
+                        <div class="error-message">
+                            <p>PM2 service data not available</p>
+                        </div>
+                    `;
+                }
+
+                // Update Discord embed meta tags dynamically based on current status
+                updateDiscordEmbed(serversData);
+            } catch (error) {
+                console.error("Error fetching status:", error);
+                document.getElementById("local-server-table").innerHTML = `
+                    <div class="error-message">
+                        <p>Error fetching server status</p>
+                        <p>Please try again later</p>
+                    </div>
+                `;
+                document.getElementById("remote-servers-table").innerHTML = `
+                    <div class="error-message">
+                        <p>Error fetching server status</p>
+                        <p>Please try again later</p>
+                    </div>
+                `;
+                document.getElementById("services-table").innerHTML = `
+                    <div class="error-message">
+                        <p>Error fetching PM2 services status</p>
+                        <p>Please try again later</p>
+                    </div>
+                `;
+            }
+        }
+        
+        function updateDiscordEmbed(serversData) {
+            // Count online/offline servers
+            let onlineCount = 0;
+            let offlineCount = 0;
+            let totalServers = Object.keys(serversData).length;
+            
+            for (const [_, info] of Object.entries(serversData)) {
+                if (info.online) {
+                    onlineCount++;
+                } else {
+                    offlineCount++;
+                }
+            }
+            
+            // Update meta description based on current status
+            const statusDescription = `🟢 ${onlineCount} online | 🔴 ${offlineCount} offline | Total: ${totalServers} servers`;
+            
+            // Update meta tags for Discord embed
+            document.querySelector('meta[name="description"]').setAttribute('content', statusDescription);
+            document.querySelector('meta[property="og:description"]').setAttribute('content', statusDescription);
+            document.querySelector('meta[property="twitter:description"]').setAttribute('content', statusDescription);
+            
+            // Set theme color based on status (green if all online, red if any offline)
+            const themeColor = offlineCount > 0 ? "#e74c3c" : "#2ecc71";
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
+        }
+        
+        setInterval(checkStatus, 5000);
+        checkStatus();
+    </script>
+</body>
+</html>
