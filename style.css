@@ -205,6 +205,14 @@ footer {
     gap: 10px;
 }
 
+.footer-version {
+    position: absolute;
+    right: 2rem;
+    bottom: 1rem;
+    font-size: 0.75rem;
+    color: #666;
+}
+
 /* Tablet */
 @media (max-width: 1024px) {
     header {
