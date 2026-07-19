@@ -1,4 +1,3 @@
-<html><head><meta name="color-scheme" content="light dark"></head><body><pre style="word-wrap: break-word; white-space: pre-wrap;">-----BEGIN PGP PUBLIC KEY BLOCK-----
 Comment: User ID:	Xargana <me@xargana.tr>
 Comment: a.k.a.:	Xargana <xargana@femboys.ltd>
 Comment: a.k.a.:	Xargana <xargana@blahaj.tr>
@@ -27,4 +26,3 @@ oP/cl3RyFxK0SiOA6n2SgLsnTd//uscHWG0bizMA/1U33wFkNyc+kBOpoKJVYep/
 9Y2gVZsY4jOy6VX7jIwL
 =ZQZm
 -----END PGP PUBLIC KEY BLOCK-----
-</pre></body></html>

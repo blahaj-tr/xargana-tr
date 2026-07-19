@@ -1,7 +1,7 @@
 <!-- this is so ass -->
 <!--
   Credits to:
-  
+
   https://github.com/adryd325/ - ./assets/oneko.js
   https://blahaj.land/ - ./assets/blahaj.gif
   https://www.svgrepo.com/svg/510970/external-link - ./assets/external-link.svg
@@ -75,6 +75,12 @@
             <div class="footer-content">
                 <p>2026 xargana.tr - No rights reserved</p>
                 <p>Powered by <a href="https://nginx.org/" target="_blank"><img src="./assets/nginx_logo.svg" alt="Nginx" style="height: 1em; vertical-align: middle; transform: translateY(-1px);"></a></p>
+
+                <div class="webring">
+                    <a href="https://gayboi.club/api/webring/prev">←</a>
+                    <a href="https://gayboi.club/">gayboi.club webring</a>
+                    <a href="https://gayboi.club/api/webring/next">→</a>
+                </div>
             </div>
             <span class="footer-version">v0.1.1</span>
         </footer>
@@ -84,12 +90,12 @@
         // Hamburger menu toggle
         const hamburger = document.getElementById('hamburger');
         const navMenu = document.getElementById('nav-menu');
-        
+
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
         });
-        
+
         // Close menu when a link is clicked
         const navLinks = navMenu.querySelectorAll('a');
         navLinks.forEach(link => {
